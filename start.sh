@@ -1,8 +1,8 @@
 #!/bin/bash
 
-sudo ln -s /home/box/web/etc/nginx.conf /etc/nginx/site-enabled/test.conf
+sudo ln -s /home/box/web/etc/nginx.conf /etc/nginx/sites-enabled/test.conf
 sudo /etc/init.d/nginx restart
-sudo ln -s /home/box/web/etc/gunicorn.conf /etc/gunicorn.d/test
-sudo /etc/init.d/gunicorn restart
+/usr/bin/gunicorn -w 2 --bind 0.0.0.0:8080 -D hello:app
+cd ask && /usr/bin/gunicorn -w 2 --bind 0.0.0.0:8000 -D ask.wsgi:application
 sudo /etc/init.d/mysql start
 
