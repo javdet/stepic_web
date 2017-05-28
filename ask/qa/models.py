@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
 # Create your models here.
 
 class QuestionManager(models.Manager):
@@ -46,12 +47,12 @@ class Question(models.Model):
     text = models.TextField()
     added_at = models.DateTimeField(auto_now_add=True)
     rating = models.IntegerField()
-    author = models.CharField(max_length=128)
-    likes = models.IntegerField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(Answer)
     QuestionManager = models.Manager()
 
 class Answer(models.Model):
     text = models.TextField()
     added_at = models.DateTimeField(auto_now_add=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    author = models.CharField(max_length=128)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
